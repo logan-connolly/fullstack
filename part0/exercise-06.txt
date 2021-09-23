@@ -1,0 +1,13 @@
+note over browser:
+User submits new note and it is appended to
+notes array on on the DOM
+end note
+
+note over browser:
+After which a JSON payload is prepared and
+sent over to the server via a POST
+request with "content" and "date" as keys
+end note
+
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/spa
+server->browser: 201 Response with message that note was created
