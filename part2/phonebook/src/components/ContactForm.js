@@ -5,7 +5,10 @@ const ContactForm = ({ persons, setPersons }) => {
   const [newPhone, setNewPhone] = useState("");
 
   const contactExists = () => {
-    return persons.filter((p) => p.name === newName.toLowerCase()).length > 0;
+    return (
+      persons.filter((p) => p.name.toLowerCase() === newName.toLowerCase())
+        .length > 0
+    );
   };
 
   const addContact = (event) => {
@@ -17,7 +20,7 @@ const ContactForm = ({ persons, setPersons }) => {
       setPersons(
         persons.concat({
           id: persons.length + 1,
-          name: newName.toLowerCase(),
+          name: newName,
           number: newPhone,
         })
       );
