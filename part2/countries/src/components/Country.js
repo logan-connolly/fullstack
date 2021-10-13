@@ -11,6 +11,24 @@ const Country = ({ country }) => {
     });
   }, [weatherUrl, country.capital]);
 
+  const showWeather = currentWeather ? (
+    <div>
+      <h4>Weather in {country.capital}</h4>
+      <div>
+        <strong>temperature:</strong> {currentWeather.temperature}
+      </div>
+      <div>
+        <img src={currentWeather.weather_icons} alt="weather logo" />
+      </div>
+      <div>
+        <strong>wind:</strong> {currentWeather.wind_speed} mph direction{" "}
+        {currentWeather.wind_dir}
+      </div>
+    </div>
+  ) : (
+    <p>Weather could not be found</p>
+  );
+
   return (
     <>
       <div>
@@ -29,19 +47,7 @@ const Country = ({ country }) => {
           })}
         </ul>
       </div>
-      <div>
-        <h4>Weather in {country.capital}</h4>
-        <div>
-          <strong>temperature:</strong> {currentWeather.temperature}
-        </div>
-        <div>
-          <img src={currentWeather.weather_icons} alt="weather logo" />
-        </div>
-        <div>
-          <strong>wind:</strong> {currentWeather.wind_speed} mph direction{" "}
-          {currentWeather.wind_dir}
-        </div>
-      </div>
+      {showWeather}
     </>
   );
 };

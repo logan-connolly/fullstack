@@ -17,7 +17,7 @@ const CountryList = ({ countries, search, setSearch, setSelected }) => {
       <ul>
         {filtered.map((country) => (
           <li key={country.cca3}>
-            {country.name.common}
+            {country.name.common + " "}
             <span>
               <button onClick={() => selectionHandler(country)}>show</button>
             </span>
