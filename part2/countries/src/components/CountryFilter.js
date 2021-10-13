@@ -1,6 +1,7 @@
-const CountryFilter = ({ search, setSearch }) => {
+const CountryFilter = ({ search, setSearch, setSelected }) => {
   const searchHandler = (event) => {
-    setSearch(event.target.value);
+    setSearch(() => event.target.value);
+    setSelected(() => "");
   };
 
   return (
