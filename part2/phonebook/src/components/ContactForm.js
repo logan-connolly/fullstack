@@ -1,13 +1,13 @@
 import { useState } from "react";
 import personsApi from "../services/persons";
 
-const ContactForm = ({ persons, setPersons }) => {
+const ContactForm = ({ persons, setPersons, showNotification }) => {
   const [newName, setNewName] = useState("");
   const [newPhone, setNewPhone] = useState("");
 
   const updateContact = (person) => {
     if (newPhone === person.number) {
-      alert(`${newName} is already in phonebook with that number`);
+      showNotification(`${newName} is in phonebook with that number`, true);
       return;
     }
 
@@ -21,6 +21,7 @@ const ContactForm = ({ persons, setPersons }) => {
           persons.map((p) => (p.id === updatedPerson.id ? updatedPerson : p))
         );
       });
+      showNotification(`Succesfully updated number of ${newName}`, false);
     }
   };
 
@@ -31,6 +32,7 @@ const ContactForm = ({ persons, setPersons }) => {
     };
     personsApi.create(newContact).then((addedPerson) => {
       setPersons(persons.concat(addedPerson));
+      showNotification(`Added ${addedPerson.name}`, false);
     });
   };
 
@@ -38,7 +40,7 @@ const ContactForm = ({ persons, setPersons }) => {
     event.preventDefault();
 
     if (newName === "" || newPhone === "") {
-      alert("Cannot be missing form values!");
+      showNotification("Cannot be missing form values!", true);
       return;
     }
 
