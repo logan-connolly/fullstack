@@ -1,32 +1,55 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import personsApi from "../services/persons";
 
 const ContactForm = ({ persons, setPersons }) => {
   const [newName, setNewName] = useState("");
   const [newPhone, setNewPhone] = useState("");
 
-  const contactExists = () => {
-    return (
-      persons.filter((p) => p.name.toLowerCase() === newName.toLowerCase())
-        .length > 0
+  const updateContact = (person) => {
+    if (newPhone === person.number) {
+      alert(`${newName} is already in phonebook with that number`);
+      return;
+    }
+
+    const updatedContact = { ...person, number: newPhone };
+    const confirmed = window.confirm(
+      `${person.name} was already added to phonebook, replace the old number with a new one?`
     );
+    if (confirmed) {
+      personsApi.update(person.id, updatedContact).then((updatedPerson) => {
+        setPersons(
+          persons.map((p) => (p.id === updatedPerson.id ? updatedPerson : p))
+        );
+      });
+    }
   };
 
-  const addContact = (event) => {
+  const addContact = () => {
+    const newContact = {
+      name: newName,
+      number: newPhone,
+    };
+    personsApi.create(newContact).then((addedPerson) => {
+      setPersons(persons.concat(addedPerson));
+    });
+  };
+
+  const formHandler = (event) => {
     event.preventDefault();
 
-    if (contactExists()) {
-      alert(`${newName} is already in phonebook`);
-    } else {
-      setPersons(
-        persons.concat({
-          id: persons.length + 1,
-          name: newName,
-          number: newPhone,
-        })
-      );
-      setNewName("");
-      setNewPhone("");
+    if (newName === "" || newPhone === "") {
+      alert("Cannot be missing form values!");
+      return;
     }
+
+    const existingContact = persons.find(
+      (p) => p.name.toLowerCase() === newName.toLowerCase()
+    );
+
+    existingContact ? updateContact(existingContact) : addContact();
+
+    setNewName("");
+    setNewPhone("");
   };
 
   const nameInputHandler = (event) => {
@@ -40,7 +63,7 @@ const ContactForm = ({ persons, setPersons }) => {
   return (
     <div>
       <h2>Add a new contact</h2>
-      <form onSubmit={addContact}>
+      <form onSubmit={formHandler}>
         <div>
           name: <input value={newName} onChange={nameInputHandler} />
         </div>
