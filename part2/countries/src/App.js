@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import CountryFilter from "./components/CountryFilter";
-import CountryList from "./components/CountryList";
 import CountryView from "./components/CountryView";
 
 const App = () => {
@@ -14,17 +13,6 @@ const App = () => {
     axios.get(countriesUrl).then((resp) => setCountries(resp.data));
   }, []);
 
-  const showView = selected ? (
-    <CountryView country={selected} />
-  ) : (
-    <CountryList
-      countries={countries}
-      search={search}
-      setSearch={setSearch}
-      setSelected={setSelected}
-    />
-  );
-
   return (
     <>
       <CountryFilter
@@ -32,7 +20,13 @@ const App = () => {
         setSearch={setSearch}
         setSelected={setSelected}
       />
-      {showView}
+      <CountryView
+        countries={countries}
+        search={search}
+        selected={selected}
+        setSearch={setSearch}
+        setSelected={setSelected}
+      />
     </>
   );
 };

@@ -1,19 +1,22 @@
-const CountryView = ({ country }) => {
+import CountryList from "./CountryList";
+import Country from "./Country";
+
+const CountryView = ({
+  countries,
+  search,
+  selected,
+  setSearch,
+  setSelected,
+}) => {
+  if (selected) return <Country country={selected} />;
+
   return (
-    <div>
-      <h1>
-        {country.name.common} {country.flag}
-      </h1>
-      <p>capital {country.capital}</p>
-      <p>population {country.population}</p>
-      <h4>languages</h4>
-      <ul>
-        {Object.entries(country.languages).map((item) => {
-          const [code, language] = item;
-          return <li key={code}>{language}</li>;
-        })}
-      </ul>
-    </div>
+    <CountryList
+      countries={countries}
+      search={search}
+      setSearch={setSearch}
+      setSelected={setSelected}
+    />
   );
 };
 
