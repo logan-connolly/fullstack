@@ -1,5 +1,3 @@
-import React from "react";
-
 const ContactList = ({ persons }) => {
   return (
     <div>

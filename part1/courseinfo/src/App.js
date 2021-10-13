@@ -1,4 +1,3 @@
-import React from "react";
 import Header from "./components/Header.js";
 import Content from "./components/Content.js";
 import Total from "./components/Total.js";

@@ -1,5 +1,3 @@
-import React from "react";
-
 const ContactFilter = ({ search, setSearch }) => {
   const searchInputHandler = (event) => setSearch(event.target.value);
 

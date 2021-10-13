@@ -1,5 +1,3 @@
-import React from "react";
-
 const Part = ({ item }) => {
   const { name, exercises } = item;
   return (
